@@ -1,0 +1,680 @@
+/* ==========================================
+   RESET & BASE STYLES
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Color palette */
+    --primary-pink: #ff6b9d;
+    --primary-pink-dark: #c44569;
+    --accent-gold: #f8b500;
+    --accent-peach: #ffa07a;
+    --light-pink: #ffe0eb;
+    --white: #ffffff;
+    --gray-light: #f5f5f5;
+    --gray-medium: #e0e0e0;
+    --gray-dark: #666666;
+    --text-dark: #2d2d2d;
+    --shadow-color: rgba(196, 69, 105, 0.15);
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Border radius */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-full: 9999px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ffeef8 0%, #ffe0eb 50%, #ffd6e8 100%);
+    background-attachment: fixed;
+}
+
+/* ==========================================
+   MUTE TOGGLE BUTTON
+   ========================================== */
+.mute-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    background: var(--white);
+    border: 2px solid var(--gray-medium);
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-medium);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    z-index: 1000;
+}
+
+.mute-toggle:hover {
+    transform: scale(1.1);
+    border-color: var(--primary-pink);
+}
+
+.mute-toggle:active {
+    transform: scale(0.95);
+}
+
+/* ==========================================
+   CONTAINER & CARD
+   ========================================== */
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+    position: relative;
+}
+
+.card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 20px 60px var(--shadow-color);
+    text-align: center;
+    position: relative;
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================
+   TYPOGRAPHY
+   ========================================== */
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-pink-dark);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-size: 1.125rem;
+    color: var(--gray-dark);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.5;
+}
+
+/* ==========================================
+   BUTTONS
+   ========================================== */
+.btn {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-medium);
+    font-family: inherit;
+    box-shadow: 0 4px 16px var(--shadow-color);
+    position: relative;
+}
+
+.btn:focus {
+    outline: 3px solid var(--primary-pink);
+    outline-offset: 4px;
+}
+
+.btn:active {
+    transform: translateY(2px);
+}
+
+.btn-yes {
+    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-pink-dark) 100%);
+    color: var(--white);
+}
+
+.btn-yes:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--shadow-color);
+}
+
+.btn-no {
+    background: var(--gray-light);
+    color: var(--gray-dark);
+    transition: transform var(--transition-medium) ease-out;
+}
+
+.btn-no:hover {
+    background: var(--gray-medium);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-pink-dark) 100%);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--shadow-color);
+}
+
+.btn-large {
+    padding: 1.25rem 2.5rem;
+    font-size: 1.25rem;
+}
+
+/* ==========================================
+   BUTTON CONTAINER (INDEX PAGE)
+   ========================================== */
+.button-container {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.attempts-text {
+    font-size: 0.875rem;
+    color: var(--gray-dark);
+    margin-bottom: var(--spacing-sm);
+}
+
+.dodge-message {
+    font-size: 1rem;
+    color: var(--primary-pink-dark);
+    font-weight: 600;
+    min-height: 1.5rem;
+    opacity: 0;
+    transition: opacity var(--transition-medium);
+}
+
+/* ==========================================
+   MODAL (CUSTOM ALERT)
+   ========================================== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: var(--spacing-md);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    animation: scaleIn 0.3s ease;
+    box-shadow: 0 24px 72px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-pink-dark);
+    margin-bottom: var(--spacing-sm);
+}
+
+.modal-message {
+    font-size: 1rem;
+    color: var(--gray-dark);
+    margin-bottom: var(--spacing-lg);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.modal-btn {
+    flex: 1;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-medium);
+    font-family: inherit;
+    min-width: 120px;
+}
+
+.modal-btn:focus {
+    outline: 3px solid var(--primary-pink);
+    outline-offset: 2px;
+}
+
+.modal-btn-primary {
+    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-pink-dark) 100%);
+    color: var(--white);
+    box-shadow: 0 4px 16px var(--shadow-color);
+}
+
+.modal-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--shadow-color);
+}
+
+.modal-btn-secondary {
+    background: var(--gray-light);
+    color: var(--gray-dark);
+}
+
+.modal-btn-secondary:hover {
+    background: var(--gray-medium);
+}
+
+/* ==========================================
+   YES PAGE (SUCCESS)
+   ========================================== */
+.confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.success-container {
+    z-index: 10;
+}
+
+.success-card {
+    max-width: 600px;
+}
+
+.success-icon {
+    font-size: 5rem;
+    margin-bottom: var(--spacing-md);
+    animation: heartBeat 1s ease infinite;
+}
+
+@keyframes heartBeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    10%, 30% {
+        transform: scale(1.1);
+    }
+    20% {
+        transform: scale(1.05);
+    }
+}
+
+.success-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary-pink-dark);
+    margin-bottom: var(--spacing-md);
+}
+
+.success-message {
+    font-size: 1.25rem;
+    color: var(--gray-dark);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.6;
+}
+
+.photo-frame {
+    width: 100%;
+    max-width: 300px;
+    margin: var(--spacing-lg) auto;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 8px 24px var(--shadow-color);
+}
+
+.photo-placeholder {
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, var(--light-pink) 0%, var(--gray-light) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+}
+
+.photo-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.photo-text {
+    font-size: 1.125rem;
+    color: var(--gray-dark);
+    font-weight: 600;
+}
+
+.success-subtext {
+    font-size: 1rem;
+    color: var(--gray-dark);
+    margin-bottom: var(--spacing-lg);
+    font-style: italic;
+}
+
+/* ==========================================
+   DATE PAGE
+   ========================================== */
+.date-container {
+    padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.date-content {
+    max-width: 900px;
+    width: 100%;
+}
+
+.date-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary-pink-dark);
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.date-subtitle {
+    font-size: 1.125rem;
+    color: var(--gray-dark);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.date-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.date-card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-medium);
+    border: 3px solid transparent;
+    box-shadow: 0 8px 24px var(--shadow-color);
+}
+
+.date-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px var(--shadow-color);
+    border-color: var(--primary-pink);
+}
+
+.date-card:focus {
+    outline: none;
+    border-color: var(--primary-pink);
+    box-shadow: 0 16px 40px var(--shadow-color);
+}
+
+.date-card.selected {
+    border-color: var(--primary-pink);
+    background: linear-gradient(135deg, var(--light-pink) 0%, var(--white) 100%);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 48px var(--shadow-color);
+}
+
+.date-icon {
+    font-size: 3.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.date-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-xs);
+}
+
+.date-card-desc {
+    font-size: 0.9375rem;
+    color: var(--gray-dark);
+    line-height: 1.5;
+}
+
+/* ==========================================
+   CONFIRMATION SECTION
+   ========================================== */
+.confirmation-section {
+    animation: fadeInUp 0.6s ease;
+}
+
+.confirmation-card {
+    background: linear-gradient(135deg, var(--light-pink) 0%, var(--white) 100%);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xl);
+    text-align: center;
+    border: 3px solid var(--primary-pink);
+    box-shadow: 0 12px 32px var(--shadow-color);
+}
+
+.confirmation-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-md);
+    animation: bounceIn 0.6s ease;
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.confirmation-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-md);
+}
+
+.selected-highlight {
+    color: var(--primary-pink-dark);
+    background: var(--white);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+}
+
+.screenshot-text {
+    font-size: 1rem;
+    color: var(--gray-dark);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 600;
+}
+
+.final-message {
+    font-size: 1.125rem;
+    color: var(--primary-pink-dark);
+    font-style: italic;
+    font-weight: 600;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+@media (max-width: 768px) {
+    .title {
+        font-size: 1.75rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .card {
+        padding: var(--spacing-lg);
+    }
+    
+    .button-container {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .success-title {
+        font-size: 2.5rem;
+    }
+    
+    .success-icon {
+        font-size: 4rem;
+    }
+    
+    .date-title {
+        font-size: 2rem;
+    }
+    
+    .date-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-buttons {
+        flex-direction: column;
+    }
+    
+    .modal-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: var(--spacing-sm);
+    }
+    
+    .card {
+        padding: var(--spacing-md);
+    }
+    
+    .title {
+        font-size: 1.5rem;
+    }
+    
+    .btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .mute-toggle {
+        width: 40px;
+        height: 40px;
+        top: 12px;
+        right: 12px;
+        font-size: 1rem;
+    }
+}
+
+/* ==========================================
+   REDUCED MOTION
+   ========================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .confetti-canvas {
+        display: none;
+    }
+}
+
+/* ==========================================
+   ACCESSIBILITY
+   ========================================== */
+:focus-visible {
+    outline: 3px solid var(--primary-pink);
+    outline-offset: 4px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Plan Our Date 🎁</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Mute toggle button -->
+    <button id="muteToggle" class="mute-toggle" aria-label="Toggle sound">
+        <span class="sound-on">🔊</span>
+        <span class="sound-off" style="display: none;">🔇</span>
+    </button>
+
+    <div class="container date-container">
+        <div class="date-content">
+            <h1 class="date-title">What sounds perfect, Barbara? 💝</h1>
+            <p class="date-subtitle">Pick your dream date (or let me surprise you 😏)</p>
+            
+            <div class="date-grid" id="dateGrid">
+                <div class="date-card" data-option="Cozy dinner 🍝" tabindex="0" role="button">
+                    <div class="date-icon">🍝</div>
+                    <h3 class="date-card-title">Cozy dinner</h3>
+                    <p class="date-card-desc">Candlelight, good food, even better company</p>
+                </div>
+                
+                <div class="date-card" data-option="Movie night 🎬" tabindex="0" role="button">
+                    <div class="date-icon">🎬</div>
+                    <h3 class="date-card-title">Movie night</h3>
+                    <p class="date-card-desc">Snacks, cuddles, and your favorite films</p>
+                </div>
+                
+                <div class="date-card" data-option="Ice cream + walk 🍦" tabindex="0" role="button">
+                    <div class="date-icon">🍦</div>
+                    <h3 class="date-card-title">Ice cream + walk</h3>
+                    <p class="date-card-desc">Sweet treats and quality time together</p>
+                </div>
+                
+                <div class="date-card" data-option="Surprise me 😏" tabindex="0" role="button">
+                    <div class="date-icon">😏</div>
+                    <h3 class="date-card-title">Surprise me</h3>
+                    <p class="date-card-desc">Trust me, I've got something special planned</p>
+                </div>
+            </div>
+
+            <div class="confirmation-section" id="confirmationSection" style="display: none;">
+                <div class="confirmation-card">
+                    <div class="confirmation-icon">✅</div>
+                    <p class="confirmation-text">
+                        Locked in! Barbara chose: <span id="selectedOption" class="selected-highlight"></span>
+                    </p>
+                    <p class="screenshot-text">Screenshot this and send it to me 😄</p>
+                    <p class="final-message">Can't wait to make this happen with you 💕</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Date selection logic
+        const dateCards = document.querySelectorAll('.date-card');
+        const confirmationSection = document.getElementById('confirmationSection');
+        const selectedOption = document.getElementById('selectedOption');
+        const dateGrid = document.getElementById('dateGrid');
+        
+        let selectedCard = null;
+
+        dateCards.forEach(card => {
+            // Click handler
+            card.addEventListener('click', () => selectDate(card));
+            
+            // Keyboard accessibility
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    selectDate(card);
+                }
+            });
+
+            // Hover sound effect
+            card.addEventListener('mouseenter', () => {
+                playSound('hover');
+            });
+        });
+
+        function selectDate(card) {
+            // Remove previous selection
+            if (selectedCard) {
+                selectedCard.classList.remove('selected');
+            }
+
+            // Add selection to clicked card
+            card.classList.add('selected');
+            selectedCard = card;
+
+            // Play selection sound
+            playSound('select');
+
+            // Show confirmation after a brief delay
+            setTimeout(() => {
+                const option = card.getAttribute('data-option');
+                selectedOption.textContent = option;
+                
+                // Smooth scroll to confirmation
+                confirmationSection.style.display = 'block';
+                setTimeout(() => {
+                    confirmationSection.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'nearest' 
+                    });
+                }, 100);
+
+                // Play celebration sound
+                setTimeout(() => {
+                    playSound('celebration');
+                }, 300);
+            }, 400);
+        }
+    </script>
+</body>
+</html>

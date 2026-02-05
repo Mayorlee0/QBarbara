@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approved! 💘</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Mute toggle button -->
+    <button id="muteToggle" class="mute-toggle" aria-label="Toggle sound">
+        <span class="sound-on">🔊</span>
+        <span class="sound-off" style="display: none;">🔇</span>
+    </button>
+
+    <!-- Confetti canvas -->
+    <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+
+    <div class="container success-container">
+        <div class="card success-card">
+            <div class="success-icon">💘</div>
+            <h1 class="success-title">Approved!</h1>
+            <p class="success-message">Barbara, you just made my whole month.</p>
+            
+            <div class="photo-frame">
+                <div class="photo-placeholder">
+                    <span class="photo-icon">📸</span>
+                    <p class="photo-text">Us, soon 💕</p>
+                </div>
+            </div>
+
+            <p class="success-subtext">I promise to make this Valentine's Day one you'll never forget.</p>
+            
+            <button id="planDateBtn" class="btn btn-primary btn-large">Let's plan our date 🎁</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Confetti animation
+        const canvas = document.getElementById('confettiCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Check for reduced motion preference
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Confetti particles
+        const confettiColors = ['#ff6b9d', '#c44569', '#f8b500', '#ffa07a', '#ff85a2', '#ffd93d'];
+        const confettiCount = prefersReducedMotion ? 0 : 80;
+        let confetti = [];
+
+        class Confetto {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = -20;
+                this.size = Math.random() * 8 + 4;
+                this.speedY = Math.random() * 3 + 2;
+                this.speedX = Math.random() * 2 - 1;
+                this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 10 - 5;
+                this.opacity = 1;
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.rotation += this.rotationSpeed;
+                
+                // Fade out near bottom
+                if (this.y > canvas.height - 100) {
+                    this.opacity -= 0.02;
+                }
+                
+                // Reset if off screen
+                if (this.y > canvas.height + 20 || this.opacity <= 0) {
+                    this.y = -20;
+                    this.x = Math.random() * canvas.width;
+                    this.opacity = 1;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                ctx.restore();
+            }
+        }
+
+        // Initialize confetti
+        for (let i = 0; i < confettiCount; i++) {
+            confetti.push(new Confetto());
+            // Stagger initial positions
+            confetti[i].y = Math.random() * canvas.height;
+        }
+
+        // Animation loop
+        function animateConfetti() {
+            if (prefersReducedMotion) return;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            confetti.forEach(c => {
+                c.update();
+                c.draw();
+            });
+            
+            requestAnimationFrame(animateConfetti);
+        }
+        
+        animateConfetti();
+
+        // Button click
+        document.getElementById('planDateBtn').addEventListener('click', () => {
+            playSound('success');
+            setTimeout(() => {
+                window.location.href = 'date.html';
+            }, 300);
+        });
+
+        // Play success sound on page load (after user interaction)
+        setTimeout(() => {
+            playSound('celebration');
+        }, 500);
+    </script>
+</body>
+</html>

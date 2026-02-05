@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbara, will you be my Valentine? 💘</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Mute toggle button -->
+    <button id="muteToggle" class="mute-toggle" aria-label="Toggle sound">
+        <span class="sound-on">🔊</span>
+        <span class="sound-off" style="display: none;">🔇</span>
+    </button>
+
+    <div class="container">
+        <div class="card">
+            <h1 class="title">Barbara, will you be my Valentine? 💘</h1>
+            <p class="subtitle">You make every day feel like a celebration, but I want to make this one extra special.</p>
+            
+            <div class="button-container">
+                <button id="yesBtn" class="btn btn-yes">Yes 💖</button>
+                <button id="noBtn" class="btn btn-no">No 🙃</button>
+            </div>
+            
+            <p class="attempts-text" id="attemptsText">Nice try 😌 Attempts: <span id="attemptCount">0</span></p>
+            <p class="dodge-message" id="dodgeMessage"></p>
+        </div>
+    </div>
+
+    <!-- Custom alert modal -->
+    <div id="customAlert" class="modal-overlay" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-icon">⚠️</div>
+            <h2 class="modal-title">Valentine System Error</h2>
+            <p class="modal-message">Action 'No' is not supported on Barbara's device.</p>
+            <div class="modal-buttons">
+                <button id="retryBtn" class="modal-btn modal-btn-secondary">Retry</button>
+                <button id="yesPlsBtn" class="modal-btn modal-btn-primary">I meant YES 😭</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Page-specific logic for index.html
+        let attempts = 0;
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const attemptCount = document.getElementById('attemptCount');
+        const dodgeMessage = document.getElementById('dodgeMessage');
+        const customAlert = document.getElementById('customAlert');
+        const retryBtn = document.getElementById('retryBtn');
+        const yesPlsBtn = document.getElementById('yesPlsBtn');
+
+        const dodgeMessages = [
+            "Oops, missed! 😏",
+            "Not so fast... 😌",
+            "Barbara pls 🥺",
+            "This is getting silly 😂",
+            "You're making this hard 💔",
+            "Just say yes already! 😤",
+            "I'm not giving up 💪",
+            "Come on Barbara... 🙏",
+            "You know you want to 😘",
+            "Fine, keep trying 😅"
+        ];
+
+        // Yes button click
+        yesBtn.addEventListener('click', () => {
+            playSound('success');
+            setTimeout(() => {
+                window.location.href = 'yes.html';
+            }, 300);
+        });
+
+        // No button dodge logic
+        let isDodging = false;
+
+        function dodgeButton() {
+            if (isDodging) return;
+            isDodging = true;
+
+            attempts++;
+            attemptCount.textContent = attempts;
+            
+            // Show dodge message
+            const messageIndex = Math.min(attempts - 1, dodgeMessages.length - 1);
+            dodgeMessage.textContent = dodgeMessages[messageIndex];
+            dodgeMessage.style.opacity = '1';
+            setTimeout(() => {
+                dodgeMessage.style.opacity = '0';
+            }, 2000);
+
+            playSound('dodge');
+
+            // Calculate new position
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+            
+            const maxX = containerRect.width - btnRect.width - 40;
+            const maxY = containerRect.height - btnRect.height - 40;
+            
+            let newX, newY;
+            let attemptsDodge = 0;
+            
+            // Keep trying until we find a position far enough from current position
+            do {
+                newX = Math.random() * maxX;
+                newY = Math.random() * maxY;
+                attemptsDodge++;
+            } while (attemptsDodge < 10 && (
+                Math.abs(newX - (btnRect.left - containerRect.left)) < 100 ||
+                Math.abs(newY - (btnRect.top - containerRect.top)) < 100
+            ));
+
+            noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
+            
+            setTimeout(() => {
+                isDodging = false;
+            }, 400);
+        }
+
+        // Desktop: dodge on hover
+        noBtn.addEventListener('mouseenter', (e) => {
+            if (window.innerWidth > 768) {
+                dodgeButton();
+            }
+        });
+
+        // Mobile: dodge on touch
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            dodgeButton();
+        });
+
+        // If they actually manage to click it, show the error modal
+        noBtn.addEventListener('click', (e) => {
+            if (!isDodging) {
+                playSound('error');
+                customAlert.style.display = 'flex';
+            }
+        });
+
+        // Modal buttons
+        retryBtn.addEventListener('click', () => {
+            customAlert.style.display = 'none';
+            playSound('click');
+        });
+
+        yesPlsBtn.addEventListener('click', () => {
+            customAlert.style.display = 'none';
+            playSound('success');
+            setTimeout(() => {
+                window.location.href = 'yes.html';
+            }, 300);
+        });
+    </script>
+</body>
+</html>
